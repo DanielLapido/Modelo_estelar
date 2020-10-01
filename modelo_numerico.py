@@ -1,10 +1,39 @@
-#MODELO NUMÉRICO DE INTERIOR ESTELAR
+# MODELO NUMÉRICO DE INTERIOR ESTELAR
+# AUTOR: DANIEL LAPIDO MARTÍNEZ
+
+# Modelo numérico que resuelve mediante el método de diferencias
+# el sistema de 7 ecuaciones diferenciales acopladas que gobiernan el interior de una estrella.
+
+# El modelo resuelve por separado las ecuaciones diferenciales para la región radiativa de la estrella y
+# para la región convectiva y posteriormente ajusta correctamente las soluciones.
+# Se combina una integración numérica desde la superficie de la estrella hacia el centro
+# y otra integración desde el centro hasta la superficie. Posteriormente, ambas soluciones se unen
+# en la frontera entre la zona radiativa y la zona convectiva de la estrella.
+# Partiendo del valor estimado de la temperatura central, se busca un valor óptimo de la temperatura central
+# para el cual se minimizan las diferencias entre las dos soluciones.
+
+# El modelo resultante devuelve los valores de la temperatura, presión, masa, luminosidad y producción de energía
+# en función de la distancia al centro de la estrella.
+
+# Finalmente, se realiza una búsqueda de los valores óptimos de Radio total y Luminosidad total en una
+# malla entorno a los valores estimados inicialmente de Radio total y Luminosidad total.
+
+from math import sqrt
+from tabulate import tabulate
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pylab as plt
+import copy
 
 #VALORES INICIALES Y CONSTANTES
-Rtot = 12
-Ltot = 40
-Tc = 1.5  #Si se desea ejecutar el código entero con una Tc diferente,
-          # será necesario cambiar este valor también en la línea 1333
+# Cambiando estas constantes se pueden resolver las ecuaciones para la estrella deseada.
+
+Rtot = 12  # Radio total de la estrella
+Ltot = 40  # Luminosidad total de la estrella
+Tcc = 1.5  # Temperatura central de la estrella
+Tc = copy.deepcopy(Tcc)  # Creamos copia de la temperatura central,
+                         # pues necesitamos el valor original de Tcc más adelante
 
 Mtot=5  #Masa total. Las unidades son 10^33 gramos
 X=0.75        #Fracción de Hidrógeno
@@ -122,8 +151,6 @@ I = list(range(0,101))
 #PRIMERAS 3 CAPAS
 
 #Calculamos temperatura y presión para las capas exteriores de la estrella
-
-from math import sqrt
 
 temperaturas=[]
 presiones=[]
@@ -648,7 +675,6 @@ while r >= 0:
 
     i = i + 1
 
-from tabulate import tabulate
 datos={'E': E,'fase': fase,'i': I,'r':radio[0:101],'Presión': presiones, 'Temperatura': temperaturas,'Luminosidad':luminosidad,'Masa':masa,'n+1':n[0:101]}
 print(tabulate(datos, headers='keys'))
 
@@ -908,9 +934,6 @@ print("A continuación se calcula el valor de la temperatura central que minimiz
 print("--------------------------------------------------------------------------------------")
 
 #Vamos a hacer el mismo cálculo anterior para diferentes valores de Tc y veremos para cuál de ellos el error es menor:
-
-import pandas as pd
-import numpy as np
 
 Tcini = 1
 Tcfin = 3
@@ -1305,8 +1328,6 @@ modelo_completo.reset_index().to_csv('DatosExportados.csv', header=True, index=F
 # y convectiva sea aún menor. Vamos a calcular una malla de modelos para diferentes valores de Rtot y Ltot, y
 # veremos en cuál de ellos el error relativo total es mínimo.
 
-import seaborn as sns
-import matplotlib.pylab as plt
 
 deltaR = 0.5
 deltaL = 5
@@ -1333,7 +1354,7 @@ while k <= 2: #Vamos a pedirle que nos disminuya el intervalo deltaR y deltaL en
         filas = [] #Lista que almacena los valores de cada fila. Es decir, los valores para cada valor fijo de Ltot iterando sobre todos los Rtot
         for Rtot in R: #Ahora debemos ejecutar todos los cálculos hasta hallar el error relativo total para esta tupla de valores (Ltot, Rtot)
 
-            Tc = 1.5  #Será necesario encontrar también el valor óptimo de Tc para estos (Ltot, Rtot)
+            Tc = Tcc  #Será necesario encontrar también el valor óptimo de Tc para estos (Ltot, Rtot)
 
             #En principio no modificamos Mtot, ni las fracciones de H y He
             Mtot = 5  # Masa total. Las unidades son 10^33 gramos
