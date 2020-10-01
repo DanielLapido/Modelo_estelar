@@ -1,6 +1,6 @@
 # Modelo numérico de interior estelar
 
-Modelo numérico que resuelve mediante el método de diferencias, el sistema de ecuaciones diferenciales acopladas que gobiernan el interior de una estrella.
+Modelo numérico que resuelve mediante el método de diferencias, el sistema de ecuaciones diferenciales acopladas que gobiernan el transporte de energía en el interior de una estrella.
 
 El modelo resuelve por separado las ecuaciones diferenciales para la región radiativa de la estrella y para la región convectiva y posteriormente ajusta correctamente las soluciones.
 Se combina una integración numérica desde la superficie de la estrella hacia el centro
