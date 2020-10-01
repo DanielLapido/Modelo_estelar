@@ -2,7 +2,7 @@
 # AUTOR: DANIEL LAPIDO MARTÍNEZ
 
 # Modelo numérico que resuelve mediante el método de diferencias
-# el sistema de 7 ecuaciones diferenciales acopladas que gobiernan el interior de una estrella.
+# el sistema de ecuaciones diferenciales acopladas que gobiernan el interior de una estrella.
 
 # El modelo resuelve por separado las ecuaciones diferenciales para la región radiativa de la estrella y
 # para la región convectiva y posteriormente ajusta correctamente las soluciones.
