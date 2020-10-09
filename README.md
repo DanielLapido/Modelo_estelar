@@ -42,3 +42,14 @@ El algoritmo para la zona convectiva es el siguiente:
 </p>
 
 
+Al unir las soluciones obtenidas mediante la integración hacia adentro de la estrella y hacia afuera, se observa una clara discontinuidad en la transición entre la zona convectiva y la zona radiativa. Por ello, se ajustan los parámetros estimados de Temperatura central, Luminosidad Total y Masa Total de la estrella.
+
+Evolución de los parámetros sin realizar el ajuste:
+<p align="center">
+  <img src="https://github.com/DanielLapido/Modelo_estelar/blob/master/Figures/evolucion_sinajuste.jpeg" width=50% height=50%>
+</p>
+
+Evolución de los parámetros realizando el ajuste:
+<p align="center">
+  <img src="https://github.com/DanielLapido/Modelo_estelar/blob/master/Figures/evolucion_condobleajuste.jpeg" width=50% height=50%>
+</p>
